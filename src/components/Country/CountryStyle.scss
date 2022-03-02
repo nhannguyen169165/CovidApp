@@ -1,0 +1,74 @@
+.container__listCountries {
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    text-align: center;
+  }
+  .table-row {
+    font-size: 22px;
+    font-weight: 600;
+  }
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  .row__country {
+    background-color: #dfedf0;
+    color: #1f718c;
+  }
+  tr:nth-child(even) .row__country {
+    background-color: #F0F5F8;
+  }
+  .row__totalConfirmed {
+    background-color: #e6f1ed;
+    color: #fe7325;
+  }
+  tr:nth-child(even) .row__totalConfirmed {
+    background-color: #f9faf4;
+  }
+  .row__totalDeaths {
+    background-color: #e6e9ee;
+    color: #d01330;
+  }
+  tr:nth-child(even) .row__totalDeaths {
+    background-color: #f8f2f6;
+  }
+  .row__totalRecovered {
+    background-color: #dbebeb;
+    color: #0f9153;
+  }
+  tr:nth-child(even) .row__totalRecovered {
+    background-color: #ecf5f4;
+  }
+
+  .pagination {
+    display: inline-block;
+    margin-top: 20px;
+  }
+
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+
+  .pagination a.active {
+    background-color: #147B98;
+    color: white;
+  }
+  .pagination a {
+    border-radius: 5px;
+  }
+  
+  .pagination a.active {
+    border-radius: 5px;
+  }
+}
