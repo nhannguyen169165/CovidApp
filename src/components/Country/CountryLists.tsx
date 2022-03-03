@@ -10,7 +10,7 @@ import "./CountryStyle.scss";
 export default function CountryLists(props: any) {
   const countries = useAppSelector(countrySelectors.selectAll);
   const dispatch = useAppDispatch();
-  const { listLoaded, status } = useAppSelector((state) => state.country);
+  const { listLoaded, status } = useAppSelector((state) => state.countries);
   const [sortOptionData, setSortOptionData] = useState<SortOption[]>([
     {
       name: "TotalConfirmedCases",
@@ -62,13 +62,13 @@ export default function CountryLists(props: any) {
         let index = i + 1;
         if (currentPagination === index) {
           elements.push(
-            <a href="#" className="active" onClick={() => setPagination(index)}>
+            <a href="#" className="active" onClick={() => setPagination(index)} key={"pg-"+index}>
               {index}
             </a>
           );
         } else {
           elements.push(
-            <a href="#" onClick={() => setPagination(index)}>
+            <a href="#" onClick={() => setPagination(index)} key={"pg-"+index}>
               {index}
             </a>
           );
@@ -98,14 +98,14 @@ export default function CountryLists(props: any) {
                     index >= tableStartIndex && index <= tableEndIndex
                 )
                 .map((item, index) => (
-                  <tr className="table-row">
+                  <tr className="table-row" onClick={() => props.openPopup(item.CountryCode,item.Slug)} key={item.ID}>
                     <td className="row__country">{item.Country}</td>
                     <td className="row__totalConfirmed">
-                      {item.TotalConfirmed}
+                      {item.TotalConfirmed.toLocaleString()}
                     </td>
-                    <td className="row__totalDeaths">{item.TotalDeaths}</td>
+                    <td className="row__totalDeaths">{item.TotalDeaths.toLocaleString()}</td>
                     <td className="row__totalRecovered">
-                      {item.TotalRecovered}
+                      {item.TotalRecovered.toLocaleString()}
                     </td>
                   </tr>
                 ))}
@@ -127,4 +127,9 @@ export default function CountryLists(props: any) {
       </div>
     </div>
   );
+}
+
+
+interface props {
+  openPopup:any;
 }

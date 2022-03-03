@@ -3,6 +3,7 @@
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
 
   td,
@@ -49,8 +50,9 @@
   }
 
   .pagination {
-    display: inline-block;
+    display: flex;
     margin-top: 20px;
+    justify-content: flex-end;
   }
 
   .pagination a {
@@ -70,5 +72,10 @@
   
   .pagination a.active {
     border-radius: 5px;
+  }
+  .pagination a:hover {
+    border-radius: 5px;
+    background-color: #1F79AC;
+    color: white;
   }
 }

@@ -1,9 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { countrySlice } from "../../redux/Slice/CountrySilce";
+import { countryChartSlice, countrySlice } from "../../redux/Slice/CountrySilce";
+import { countryDetailSlice } from "../../redux/Slice/CountrySilce";
 export const store = configureStore({
     reducer: {
-        country:countrySlice.reducer
+        countries:countrySlice.reducer,
+        countryDetail:countryDetailSlice.reducer,
+        countryChart:countryChartSlice.reducer
     }
 })
 
