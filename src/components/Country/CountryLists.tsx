@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import {
   fetchListCountriesAsync,
   countrySelectors,
+  setBookmarkFromState,
 } from "../../redux/Slice/CountrySilce";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { SortOption } from "../../app/interfaces/sort.interface";
 import "./CountryStyle.scss";
-
 export default function CountryLists(props: any) {
   const countries = useAppSelector(countrySelectors.selectAll);
   const dispatch = useAppDispatch();
@@ -35,6 +35,23 @@ export default function CountryLists(props: any) {
     }
   }, [listLoaded, dispatch]);
 
+  const setBookmark = (countryCode: string) => {
+    let countryBookmark = localStorage.getItem("country") || "[]";
+    let arr = JSON.parse(countryBookmark);
+    arr.push(countryCode);
+    localStorage.setItem("country", JSON.stringify(arr));
+    dispatch(setBookmarkFromState(countryCode));
+  };
+  const removeBookmark = (countryCode: string) => {
+    let countryBookmark = localStorage.getItem("country") || "[]";
+    let arr = JSON.parse(countryBookmark);
+    let index = arr.indexOf(countryCode);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+    localStorage.setItem("country", JSON.stringify(arr));
+    dispatch(setBookmarkFromState(countryCode));
+  };
   //update pagination data
   const setPagination = (value: number) => {
     if (value > 0) {
@@ -44,7 +61,7 @@ export default function CountryLists(props: any) {
     }
   };
 
-  //create element pagination number
+  //create element pagination
   const paginationElements = () => {
     let elements = [];
     if (countries.length > 0) {
@@ -62,13 +79,22 @@ export default function CountryLists(props: any) {
         let index = i + 1;
         if (currentPagination === index) {
           elements.push(
-            <a href="#" className="active" onClick={() => setPagination(index)} key={"pg-"+index}>
+            <a
+              href="#"
+              className="active"
+              onClick={() => setPagination(index)}
+              key={"pg-" + index}
+            >
               {index}
             </a>
           );
         } else {
           elements.push(
-            <a href="#" onClick={() => setPagination(index)} key={"pg-"+index}>
+            <a
+              href="#"
+              onClick={() => setPagination(index)}
+              key={"pg-" + index}
+            >
               {index}
             </a>
           );
@@ -87,6 +113,7 @@ export default function CountryLists(props: any) {
             <th>Total Confirmed</th>
             <th>Total Deaths</th>
             <th>Total Recovered</th>
+            <th>Options</th>
           </tr>
         </thead>
         <tbody>
@@ -98,14 +125,41 @@ export default function CountryLists(props: any) {
                     index >= tableStartIndex && index <= tableEndIndex
                 )
                 .map((item, index) => (
-                  <tr className="table-row" onClick={() => props.openPopup(item.CountryCode,item.Slug)} key={item.ID}>
-                    <td className="row__country">{item.Country}</td>
+                  <tr className="table-row" key={item.ID}>
+                    <td
+                      className="row__country"
+                      onClick={() =>
+                        props.openPopup(item.CountryCode, item.Slug)
+                      }
+                    >
+                      {item.Country}{" "}
+                      {item.IsBookmark ? (
+                        <i className="fas fa-star"></i>
+                      ) : null}
+                    </td>
                     <td className="row__totalConfirmed">
                       {item.TotalConfirmed.toLocaleString()}
                     </td>
-                    <td className="row__totalDeaths">{item.TotalDeaths.toLocaleString()}</td>
+                    <td className="row__totalDeaths">
+                      {item.TotalDeaths.toLocaleString()}
+                    </td>
                     <td className="row__totalRecovered">
                       {item.TotalRecovered.toLocaleString()}
+                    </td>
+                    <td className="row__options">
+                      <span>
+                        {!item.IsBookmark ? (
+                          <i
+                            className="far fa-bookmark"
+                            onClick={() => setBookmark(item.CountryCode)}
+                          ></i>
+                        ) : (
+                          <i
+                            className="fas fa-bookmark"
+                            onClick={() => removeBookmark(item.CountryCode)}
+                          ></i>
+                        )}
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -129,7 +183,6 @@ export default function CountryLists(props: any) {
   );
 }
 
-
 interface props {
-  openPopup:any;
+  openPopup: any;
 }

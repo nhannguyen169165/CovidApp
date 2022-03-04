@@ -24,6 +24,9 @@
     background-color: #dfedf0;
     color: #1f718c;
   }
+  .row__country .fa-star {
+    color:#FFD700;
+  }
   tr:nth-child(even) .row__country {
     background-color: #F0F5F8;
   }
@@ -49,6 +52,13 @@
     background-color: #ecf5f4;
   }
 
+  .row__options {
+    background-color: #dfedf0;
+    color: #1f718c;
+  }
+  tr:nth-child(even) .row__options {
+    background-color: #F0F5F8;
+  }
   .pagination {
     display: flex;
     margin-top: 20px;

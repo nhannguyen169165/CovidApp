@@ -10,7 +10,8 @@ export interface Country {
     NewRecovered: number,
     TotalRecovered: number,
     Date: string,
-    Premium: object
+    Premium: object;
+    IsBookmark:boolean;
 }
 
 export interface CountryDetailData {
