@@ -8,7 +8,7 @@ export const SortListCountries = (sortData: SortData) => {
           sortData.data.sort(
             (a: any, b: any) => a.TotalConfirmed - b.TotalConfirmed
           );
-        }
+        }else
         {
           sortData.data.sort(
             (a: any, b: any) => b.TotalConfirmed - a.TotalConfirmed
@@ -18,7 +18,7 @@ export const SortListCountries = (sortData: SortData) => {
       case "NumberOfDeaths":
         if (sortData.option[i].type === "asc") {
           sortData.data.sort((a: any, b: any) => a.TotalDeaths - b.TotalDeaths);
-        }
+        }else
         {
           sortData.data.sort((a: any, b: any) => b.TotalDeaths - a.TotalDeaths);
         }
@@ -28,7 +28,7 @@ export const SortListCountries = (sortData: SortData) => {
           sortData.data.sort(
             (a: any, b: any) => a.TotalRecovered - b.TotalRecovered
           );
-        }
+        }else
         {
           sortData.data.sort(
             (a: any, b: any) => b.TotalRecovered - a.TotalRecovered

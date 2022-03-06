@@ -29,7 +29,6 @@ export const fetchListCountriesAsync = createAsyncThunk<
       for (var i = 0; i < sortOption.length; i++) {
         data = SortListCountries({ option: sortOption, data });
       }
-      console.log(data);
       return data;
     });
   } catch (error: any) {
@@ -166,7 +165,6 @@ export const fetchCountryChartAsync = createAsyncThunk<
       ) + "T00:00:00Z";
     return await api.Country.chart(slug, from, to).then((response) => {
       const data: CountryChart[] = [];
-      console.log(response);
       for (var i = 0; i < response.length; i++) {
         data.push({
           ID: "ID-" + i + response[i].Country,
@@ -177,7 +175,6 @@ export const fetchCountryChartAsync = createAsyncThunk<
           Date: moment(response[i].Date).format("YYYY-MM-DD"),
         });
       }
-      console.log(data);
       return data;
     });
   } catch (error: any) {

@@ -28,9 +28,19 @@
     margin-top: 50px;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    .modal-content{
+      height: 80vh;
+      overflow-y: auto;
+    }
+    .recharts-yAxis{
+      font-size: 10px;
+    }
+    .recharts-xAxis{
+      font-size: 10px;
+    }
   }
   .modal-header {
-    height: 20px;
+    height: 40px;
   }
   .close {
     color: #aaaaaa;
@@ -46,3 +56,47 @@
     cursor: pointer;
   }
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .modal .modal-container {
+    position: fixed;
+    width: -webkit-fill-available;
+    bottom: 0;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    font-size: 12px;
+    .modal-content{
+      height: 70vh;
+      overflow-y: auto;
+    }
+ 
+  }
+}
+@media only screen and (max-width: 1000px)  and (orientation: landscape) {
+  .modal .modal-container {
+    position: fixed;
+    width: -webkit-fill-available;
+    bottom: 0;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    font-size: 12px;
+    .modal-content{
+      height: 80vh;
+      overflow-y: auto;
+    }
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

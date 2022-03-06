@@ -1,36 +1,65 @@
 .home-container {
   font-family: "Roboto Slab", serif;
   margin: 20px 60px 20px 60px;
+  .home-container__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Lobster", cursive;
+    color: #147b98;
+    margin-bottom: 30px;
+    .home-container__title__left {
+      font-size: 100px;
+      padding-right: 5px;
+    }
+    .home-container__title__right {
+      font-size: 20px;
+    }
+   
+  }
+  .home-container__label {
+    background-color: #147b98;
+    padding: 10px;
+    font-size: 18px;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .home-container__label__small{
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 10px;
+  }
 }
 
-.modal-content__title{
+.modal-content__title {
   display: flex;
   margin-bottom: 10px;
 }
 
-.modal-content__title__countryFlag{
+.modal-content__title__countryFlag {
   width: 20%;
   margin-right: 20px;
   border: 1px solid black;
 }
 
-.modal-content__title__countryFlag img{
+.modal-content__title__countryFlag img {
   width: 100%;
   height: 100%;
 }
 
-.modal-content__title__countryName{
+.modal-content__title__countryName {
   font-size: 24px;
   font-weight: 600;
 }
 
-.modal-content__info{
-  display: flex; 
+.modal-content__info {
+  display: flex;
   align-items: center;
   font-size: 18px;
 }
 
-.modal-content__info__label{
+.modal-content__info__label {
   font-weight: 600;
   padding-right: 10px;
 }
@@ -39,7 +68,6 @@
   font-size: 20px;
   font-weight: 600;
   margin-top: 20px;
-
 }
 .modal-content__chart {
   width: 100%;
@@ -48,3 +76,22 @@
   margin-top: 40px;
   margin-bottom: 20px;
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .home-container {
+    margin: 20px 20px 20px 20px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

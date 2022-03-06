@@ -11,8 +11,6 @@ import {
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import "./HomeStyle.scss";
 import {
-  LineChart,
-  Line,
   CartesianGrid,
   XAxis,
   YAxis,
@@ -21,14 +19,16 @@ import {
   Area,
   ResponsiveContainer,
 } from "recharts";
-
+import SpinnerLoader from "../../components/Common/SpinnerLoader/SpinnerLoader";
 export default function HomeScreen() {
   const [isOpenModal, setOpenModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const countryDetailData = useAppSelector(countryDetailSelectors.selectAll);
   const countryChartData = useAppSelector(countryChartSelectors.selectAll);
-  const { dataLoaded, status } = useAppSelector((state) => state.countryDetail);
+  const { dataLoaded } = useAppSelector((state) => state.countryDetail);
   const dispatch = useAppDispatch();
   const openPopup = (countryCode: string, slug: string) => {
+    setIsLoading(true);
     dispatch(fetchCountryDetailAsync({ countryCode: countryCode }));
     dispatch(fetchCountryChartAsync({ slug: slug }));
   };
@@ -37,14 +37,18 @@ export default function HomeScreen() {
     setOpenModal(false);
   };
 
+  const setLoadingEvent = (status: boolean) => {
+    setIsLoading(status);
+  };
   useEffect(() => {
     if (dataLoaded) {
       setOpenModal(true);
+      setIsLoading(false);
     }
   }, [dataLoaded, dispatch]);
 
   const renderLineChart = (
-    <ResponsiveContainer width="90%" height={400}>
+    <ResponsiveContainer width="100%" height={400}>
       <AreaChart
         width={600}
         height={400}
@@ -65,8 +69,8 @@ export default function HomeScreen() {
             <stop offset="95%" stopColor="#0F9153" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis dataKey="Date"/>
-        <YAxis width={150} />
+        <XAxis dataKey="Date" />
+        <YAxis />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
         <Area
@@ -76,14 +80,14 @@ export default function HomeScreen() {
           fillOpacity={1}
           fill="url(#colorConfirmed)"
         />
-            <Area
+        <Area
           type="monotone"
           dataKey="Deaths"
           stroke="#D01330"
           fillOpacity={1}
           fill="url(#colorDeaths)"
         />
-            <Area
+        <Area
           type="monotone"
           dataKey="Recovered"
           stroke="#0F9153"
@@ -151,14 +155,29 @@ export default function HomeScreen() {
   };
 
   return (
-    <div className="home-container">
-      <div>
-        <p>Coronavirus (COVID-19) Dashboard</p>
+    <>
+      <div className="home-container">
+        <div className="home-container__title">
+          <div className="home-container__title__left">
+            <span>C</span>
+          </div>
+          <div className="home-container__title__right">
+            <p>ovid</p>
+            <p>App</p>
+          </div>
+        </div>
+        <div className="home-container__label">
+          <span>Coronavirus (COVID-19) Dashboard</span>
+        </div>
+        <div className="home-container__label__small">
+          <span>Click country name to see detail</span>
+        </div>
+        <CountryLists openPopup={openPopup} setLoading={setLoadingEvent} />
+        <SpinnerLoader isLoading={isLoading} />
       </div>
-      <CountryLists openPopup={openPopup} />
       <Modal isVisible={isOpenModal} closePopup={closePopup}>
         {modalContent()}
       </Modal>
-    </div>
+    </>
   );
 }

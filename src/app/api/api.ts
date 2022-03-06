@@ -4,10 +4,6 @@ axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
-let store;
-export const injectStore = (_store:any) => {
-  store = _store;
-};
 // const sleep = () => new Promise(resolve => setTimeout(resolve, 500));
 
 axios.interceptors.response.use(async response => {

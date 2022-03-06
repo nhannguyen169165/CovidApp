@@ -10,7 +10,7 @@ import "./CountryStyle.scss";
 export default function CountryLists(props: any) {
   const countries = useAppSelector(countrySelectors.selectAll);
   const dispatch = useAppDispatch();
-  const { listLoaded, status } = useAppSelector((state) => state.countries);
+  const { listLoaded } = useAppSelector((state) => state.countries);
   const [sortOptionData, setSortOptionData] = useState<SortOption[]>([
     {
       name: "TotalConfirmedCases",
@@ -29,9 +29,15 @@ export default function CountryLists(props: any) {
   const [tableStartIndex, setTableStartIndex] = useState(0);
   const [tableEndIndex, setTableEndIndex] = useState(10);
   const [currentPagination, setCurrentPagination] = useState(1);
+  const setLoading = (status: boolean) => {
+    props.setLoading(status);
+  };
   useEffect(() => {
     if (!listLoaded) {
+      setLoading(true);
       dispatch(fetchListCountriesAsync({ sortOption: sortOptionData }));
+    } else {
+      setLoading(false);
     }
   }, [listLoaded, dispatch]);
 
@@ -106,65 +112,68 @@ export default function CountryLists(props: any) {
 
   return (
     <div className="container__listCountries">
-      <table>
-        <thead>
-          <tr>
-            <th>Country</th>
-            <th>Total Confirmed</th>
-            <th>Total Deaths</th>
-            <th>Total Recovered</th>
-            <th>Options</th>
-          </tr>
-        </thead>
-        <tbody>
-          {countries.length === 0
-            ? null
-            : countries
-                .filter(
-                  (element, index) =>
-                    index >= tableStartIndex && index <= tableEndIndex
-                )
-                .map((item, index) => (
-                  <tr className="table-row" key={item.ID}>
-                    <td
-                      className="row__country"
-                      onClick={() =>
-                        props.openPopup(item.CountryCode, item.Slug)
-                      }
-                    >
-                      {item.Country}{" "}
-                      {item.IsBookmark ? (
-                        <i className="fas fa-star"></i>
-                      ) : null}
-                    </td>
-                    <td className="row__totalConfirmed">
-                      {item.TotalConfirmed.toLocaleString()}
-                    </td>
-                    <td className="row__totalDeaths">
-                      {item.TotalDeaths.toLocaleString()}
-                    </td>
-                    <td className="row__totalRecovered">
-                      {item.TotalRecovered.toLocaleString()}
-                    </td>
-                    <td className="row__options">
-                      <span>
-                        {!item.IsBookmark ? (
-                          <i
-                            className="far fa-bookmark"
-                            onClick={() => setBookmark(item.CountryCode)}
-                          ></i>
-                        ) : (
-                          <i
-                            className="fas fa-bookmark"
-                            onClick={() => removeBookmark(item.CountryCode)}
-                          ></i>
-                        )}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-        </tbody>
-      </table>
+      <div className="container__listCountries__table">
+        <table>
+          <thead>
+            <tr className="table-header">
+              <th>Country</th>
+              <th>Total Confirmed</th>
+              <th>Total Deaths</th>
+              <th>Total Recovered</th>
+              <th>Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {countries.length === 0
+              ? null
+              : countries
+                  .filter(
+                    (element, index) =>
+                      index >= tableStartIndex && index <= tableEndIndex
+                  )
+                  .map((item, index) => (
+                    <tr className="table-row" key={item.ID}>
+                      <td
+                        className="row__country pointer"
+                        onClick={() =>
+                          props.openPopup(item.CountryCode, item.Slug)
+                        }
+                      >
+                        {item.Country}{" "}
+                        {item.IsBookmark ? (
+                          <i className="fas fa-star"></i>
+                        ) : null}
+                      </td>
+                      <td className="row__totalConfirmed">
+                        {item.TotalConfirmed.toLocaleString()}
+                      </td>
+                      <td className="row__totalDeaths">
+                        {item.TotalDeaths.toLocaleString()}
+                      </td>
+                      <td className="row__totalRecovered">
+                        {item.TotalRecovered.toLocaleString()}
+                      </td>
+                      <td className="row__options">
+                        <span className="pointer">
+                          {!item.IsBookmark ? (
+                            <i
+                              className="far fa-bookmark"
+                              onClick={() => setBookmark(item.CountryCode)}
+                            ></i>
+                          ) : (
+                            <i
+                              className="fas fa-bookmark"
+                              onClick={() => removeBookmark(item.CountryCode)}
+                            ></i>
+                          )}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+          </tbody>
+        </table>
+      </div>
+
       <div className="pagination">
         {currentPagination === 1 || countries.length === 0 ? null : (
           <a href="#" onClick={() => setPagination(currentPagination - 1)}>
